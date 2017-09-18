@@ -20,12 +20,13 @@ class Task
   end
 
   def self.all_sorted
-    returned_tasks = DB.exec("SELECT * FROM tasks ORDER BY due_date ASC;")
+    returned_tasks = DB.exec("SELECT * FROM tasks ORDER BY due_date ASC;")  
     tasks = []
     returned_tasks.each() do |task|
       description = task.fetch("description")
       list_id = task.fetch("list_id").to_i()
-      tasks.push(Task.new({:description => description, list_id: list_id}))
+      due_date = task.fetch("due_date")
+      tasks.push(Task.new({:description => description, list_id: list_id, due_date: due_date}))
     end
     tasks
   end
